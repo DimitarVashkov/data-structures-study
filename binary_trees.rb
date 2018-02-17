@@ -6,14 +6,6 @@ class Node
     @child_left = nil
     @child_right = nil
   end
-
-  def children
-    [@child_left, @child_right]
-  end
-
-  def to_s
-    @value
-  end
 end
 
 def build_tree(array)
@@ -25,9 +17,6 @@ def build_tree(array)
   root
 end
 
-# @param [Node form the array] node
-# @param [The parent object] root
-# Recursively create all nodes in the tree
 def insert_node(node, root)
   if node.value < root.value
     if root.child_left.nil?
@@ -46,32 +35,21 @@ def insert_node(node, root)
   end
 end
 
-array = [5, 7, 11, 3, 2, 25, 6]
-root = build_tree(array)
-#puts root.child_right.child_left.to_s # answer = 6
-
 def breadth_first_search(value, root)
   visited = []
   visited << root
-  puts visited[0].to_s
+  puts visited[0].value
   until visited.empty?
     node = visited.pop
     return node if node.value == value
     visited.unshift(node.child_left) unless node.child_left.nil?
     visited.unshift(node.child_right) unless node.child_right.nil?
     visited.each do |x|
-      puts x.to_s
+      puts x.value
     end
   end
   nil
 end
-
-# Works but there is a mistake in the implementation
-#
-# node_returned = breadth_first_search(25, root)
-# puts node_returned
-#
-# puts node_returned.value unless node_returned.nil?
 
 def depth_first_search(value, root)
   if root.nil?
@@ -85,9 +63,16 @@ def depth_first_search(value, root)
   end
 end
 
-# DFS correct implementation
-
+array = [5, 7, 11, 3, 2, 25, 6]
+root = build_tree(array)
+node_returned = breadth_first_search(25, root)
+puts '----------- BFS -------------'
+puts node_returned
+puts node_returned.value unless node_returned.nil?
+puts '-----------------------------'
 result = depth_first_search(3, root)
+puts '----------- DFS -------------'
 puts result
 puts result.value
 puts result.nil?
+puts '-----------------------------'
